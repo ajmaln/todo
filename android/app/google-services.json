@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "534435680319",
+    "firebase_url": "https://do-it-lets-do-it.firebaseio.com",
+    "project_id": "do-it-lets-do-it",
+    "storage_bucket": "do-it-lets-do-it.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534435680319:android:0b1cbe3f5b9f827b0be88a",
+        "android_client_info": {
+          "package_name": "com.devshub.doit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534435680319-gecgjkgvjnhb3ioo54podd56qu4ffcfh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApJoZC2A4ctMXLq5niCzbjOEEHHUW_-6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534435680319-gecgjkgvjnhb3ioo54podd56qu4ffcfh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
