@@ -2,11 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Todo extends StatelessWidget {
-  Todo({
-    Key key,
-    this.todo,
-    this.disableEditing
-  }) : super(key: key);
+  Todo({Key key, this.todo, this.disableEditing}) : super(key: key);
 
   final DocumentSnapshot todo;
   final bool disableEditing;
@@ -15,9 +11,14 @@ class Todo extends StatelessWidget {
     todo.reference.updateData({'isDone': !todo['isDone']});
   }
 
+  void delete() {
+    todo.reference.delete();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controller = new TextEditingController(text: todo['todo']);
+    TextEditingController _controller =
+        new TextEditingController(text: todo['todo']);
 
     return ListTile(
       dense: true,
@@ -29,14 +30,10 @@ class Todo extends StatelessWidget {
           controller: _controller,
           style: TextStyle(fontSize: 18.0),
           onSubmitted: (_v) async {
-            await todo.reference.updateData({ 'todo': _controller.value.text });
+            await todo.reference.updateData({'todo': _controller.value.text});
           },
-          // initialValue: task != null ? task['title'] : '',
           decoration: InputDecoration(
             hintText: 'Description',
-            // hintStyle: TextStyle(
-            //   fontSize: 20.0,
-            // ),
           ),
         ),
         alignment: Alignment(-1.2, 0),
@@ -48,6 +45,7 @@ class Todo extends StatelessWidget {
           setDone();
         },
       ),
+      trailing: IconButton(icon: Icon(Icons.close), onPressed: () { delete(); }),
     );
   }
 }
