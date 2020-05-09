@@ -26,6 +26,8 @@ class _NewTaskState extends State<NewTask> {
     setState(() {
       task = widget.task;
     });
+    _controller =
+        new TextEditingController(text: task != null ? task['title'] : '');
   }
 
   void setDone(todoID, value) {
@@ -35,22 +37,35 @@ class _NewTaskState extends State<NewTask> {
         .updateData({'isDone': value});
   }
 
-  void addTodo() {
-    task.reference.collection('todos').add({'todo': '', 'isDone': false});
+  Future addTodo() async {
+    if (task == null) {
+      final DocumentReference doc = await Firestore.instance
+          .collection('tasks')
+          .add({'title': _controller.value.text});
+      doc.get().then((value) => {
+            setState(() {
+              task = value;
+            })
+          });
+      return await doc.collection('todos').add({'todo': '', 'isDone': false});
+    } else {
+      return await task.reference
+          .collection('todos')
+          .add({'todo': '', 'isDone': false});
+    }
   }
 
   void _showSuccessToast(BuildContext context) {
     scaffoldState.currentState.showSnackBar(
       SnackBar(
-        content: const Text('Saved!'),
+        content: const Text('Added!'),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    _controller =
-        new TextEditingController(text: task != null ? task['title'] : '');
+    
     return Scaffold(
       key: scaffoldState,
       appBar: AppBar(
@@ -128,17 +143,18 @@ class _NewTaskState extends State<NewTask> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (task == null) {
-            await Firestore.instance
-                .collection('tasks')
-                .add({'title': _controller.value.text});
-          } else {
-            task.reference.updateData({'title': _controller.value.text});
-          }
+          // if (task == null) {
+          //   await Firestore.instance
+          //       .collection('tasks')
+          //       .add({'title': _controller.value.text});
+          // } else {
+          //   task.reference.updateData({'title': _controller.value.text});
+          // }
+          await addTodo();
           _showSuccessToast(context);
         },
-        tooltip: 'New',
-        child: Icon(Icons.save),
+        tooltip: 'New Todo',
+        child: Icon(Icons.add),
       ),
     );
   }

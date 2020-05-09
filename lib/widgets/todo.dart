@@ -34,6 +34,7 @@ class Todo extends StatelessWidget {
           },
           decoration: InputDecoration(
             hintText: 'Description',
+            helperText: 'Submit to save'
           ),
         ),
         alignment: Alignment(-1.2, 0),
